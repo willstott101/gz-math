@@ -29,6 +29,13 @@ namespace gz
 {
   namespace math
   {
+    template<typename T> class Matrix3;
+
+    namespace python {
+      template<typename T>
+      T* getArray(Matrix3<T>);
+    };
+
     // Inline bracket to help doxygen filtering.
     inline namespace GZ_MATH_VERSION_NAMESPACE {
     //
@@ -129,6 +136,8 @@ namespace gz
              {_v20, _v21, _v22}}
       {
       }
+
+      friend T* python::getArray(Matrix3<T>);
 
       /// \brief Construct 3x3 rotation Matrix from a quaternion.
       /// \param[in] _q Quaternion to set the Matrix3 from.
@@ -636,7 +645,7 @@ namespace gz
       }
 
       /// \brief the 3x3 matrix
-      T data[3][3];
+      private: T data[3][3];
     };
 
     namespace detail {

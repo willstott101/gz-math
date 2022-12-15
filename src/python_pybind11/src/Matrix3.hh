@@ -42,6 +42,10 @@ namespace python
  */
 void defineMathMatrix3(py::module &m, const std::string &typestr);
 
+T* getArray(Matrix3& m) {
+     return m.data;
+}
+
 /// Help define a pybind11 wrapper for a gz::math::Matrix3
 /**
  * \param[in] module a pybind11 module to add the definition to
@@ -126,7 +130,7 @@ void helpDefineMathMatrix3(py::module &m, const std::string &typestr)
     .def("__repr__", toString)
     .def_buffer([](Class &self) -> py::buffer_info {
       return py::buffer_info(
-          self.data,  // Pointer to buffer
+          getArray(self),  // Pointer to buffer
           sizeof(T),  // Size of one scalar
           py::format_descriptor<T>::format(),
           2,  // Number of dimensions
